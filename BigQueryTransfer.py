@@ -49,20 +49,20 @@ class Prepare_Job:
         try:
             self.job_config = bigquery.LoadJobConfig(
 
-                # TODO: - autodetecting schema. Change this if you're
+                #TODO: autodetecting schema. Change this if you're
                 # going to manually define schema via the schema= param.
                 autodetect=True,
-                schema_update_options = [
+                schema_update_options=[
                     # allow the addition of new fields rather than failing on schema mismatch.
                     # If your raw source data changes format over time, you can also use .ALLOW_FIELD_UPDATE
                     # To accomodate changes to existing fields
                     bigquery.SchemaUpdateOption.ALLOW_FIELD_ADDITION
                 ],
 
-                # TODO: this line asserts source format as CSV, so change if other format
+                #TODO: this line asserts source format as CSV, so change if other format
                 source_format = bigquery.SourceFormat.CSV,
 
-                # TODO: assumes you want partitioning by month
+                #TODO: assumes you want partitioning by month
                 # and uses a field from the csv to define this date -
                 # 'ingress_date' is the example for the template.
                 time_partitioning = bigquery.TimePartitioning(
@@ -75,12 +75,12 @@ class Prepare_Job:
                 write_disposition = bigquery.WriteDisposition.WRITE_APPEND
             )
 
-            # TODO: Some datasets may have long string fields broken by new lines; setting
+            #TODO: Some datasets may have long string fields broken by new lines; setting
             # this param to True will enable bigquery to parse this appropriately.
             # Not necessary if your dataset doesn't have long string fields with newlines
             self.job_config.allow_quoted_newlines = True
 
-            # TODO: this will help with parsing rows that have null values in some columns
+            #TODO: this will help with parsing rows that have null values in some columns
             self.job_config.allow_jagged_rows = True
 
         except Exception:
@@ -139,7 +139,7 @@ def init_load():
         
             # step through each job with user confirming load;
             # enables user to restart job, selecting a start point by skipping sets
-            # TODO: refactoring also required here if you want to remove the 
+            #TODO: refactoring also required here if you want to remove the 
             # enforcement of a required list of datasets
             while True:
                 command = input(f"# Attempt to Load {job_name}? Y/N: ").lower()
